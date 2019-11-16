@@ -1,0 +1,18 @@
+{
+  "name": "meeti",
+  "version": "1.0.0",
+  "description": "Proyecto clone de Meet Up usando Nodejs, postgresql y EJS como motor de plantillas",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index"
+  },
+  "author": "Natanael Rodriguez Venegas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
