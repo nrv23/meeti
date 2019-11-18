@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/css/normalize.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches&display=swap" rel="stylesheet"> 
+	<link rel="stylesheet" href="/css/app.css">
+	<title>Meeti - <%- nombrePagina %> </title>
+</head>
+<body>
+	<header class="site-header contenedor">
+		<a href="/">
+			<img src="/img/logo.png" alt="Logo Meeti">
+		</a>
+		<nav class="nav">
+	
+		       <a href="#">Crear Grupo</a>
+		     	<a href="#">Iniciar Sesión</a>
+		     	<a href="/crear-cuenta">Registrarse</a>
+		    
+		</nav>
+	</header>
+	<!--
+		En ejs para inyectar codigo de javascript se utiliza la siguiente sintaxis <% %>
+		para imprimir codigo html por ejemplo para las vistas se usa <%- %>
+	-->
+
+	<%- body %> <!-- Esto funciona igual que handlebars, la llamada a la variable body se hace automaticamente, el mismo motor de plantillas sabe cual vista esta siendo renderizada entonces
+	la variable body es donde se carga esa vista y se renderiza en el master page, de esa manera la variable body que se imprime en el master page imprime una vista dependiendo de cual se esta visitando porque el mismo ejs sabe cual vista se renderiza para hacer la llamada  la variable body, cargar la vista en la variable y mostrarla en el master page 
+	<%-  %> dentro de esa expresion va ir una variable y asi se imprime el valor de una variable
+	dentro de html en ejs
+-->
+	<footer class="site-footer contenedor">
+		<nav class="nav">
+	
+		       <a href="#">Crear Grupo</a>
+		     	<a href="#">Iniciar Sesión</a>
+		     	<a href="/crear-cuenta">Registrarse</a>
+		    
+		</nav>
+		<p class="copyright">Todos los derechos reservados Meeti <%- year %> &copy;</p>
+	</footer>
+</body>
+</html>
