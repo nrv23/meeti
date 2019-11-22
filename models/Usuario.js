@@ -13,7 +13,7 @@ const Usuarios = DB.define('usuario',{
 		type: Sequelize.STRING(60),
 		allowNull: false,
 		validate:{
-			isEmpty:{
+			notEmpty: {
 				msg: 'El nombre es requerido'
 			}
 		}
@@ -36,7 +36,7 @@ const Usuarios = DB.define('usuario',{
 		type: Sequelize.STRING(60),
 		allowNull: false,
 		validate:{
-			isEmpty:{
+			notEmpty: {
 				msg: 'El password es requerido'
 			}
 		}
@@ -50,11 +50,13 @@ const Usuarios = DB.define('usuario',{
 	imagen: Sequelize.STRING(40)
 
 },{
-	hook:{
+	hooks:{
 		//hashear la contraseña antes de crear el usuario
 		//sequelize tiene hooks que son funciones que se ejecutan antes o despues de alguna accion
 
 		beforeCreate(usuario){
+	
+
 			usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10),null);
 		}
 	}

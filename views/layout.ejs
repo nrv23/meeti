@@ -26,11 +26,25 @@
 		En ejs para inyectar codigo de javascript se utiliza la siguiente sintaxis <% %>
 		para imprimir codigo html por ejemplo para las vistas se usa <%- %>
 	-->
+	<% if (locals.mensajes) {%>
 
+		<% const categoria = Object.keys(locals.mensajes);  %>
+		<% if(categoria.length){ %> 
+			<% locals.mensajes[categoria].forEach(alerta => {%>
+				<div class="alertas">
+					<p class="alerta <%= categoria%>"><%= alerta %></p>
+				</div>
+			<% }) %>
+		<% }%>
+	<% } %>
+	
 	<%- body %> <!-- Esto funciona igual que handlebars, la llamada a la variable body se hace automaticamente, el mismo motor de plantillas sabe cual vista esta siendo renderizada entonces
 	la variable body es donde se carga esa vista y se renderiza en el master page, de esa manera la variable body que se imprime en el master page imprime una vista dependiendo de cual se esta visitando porque el mismo ejs sabe cual vista se renderiza para hacer la llamada  la variable body, cargar la vista en la variable y mostrarla en el master page 
 	<%-  %> dentro de esa expresion va ir una variable y asi se imprime el valor de una variable
 	dentro de html en ejs
+	//si al menos hay un error se imprime, la categoria es
+			//la clase en css para imprimir el estilo del error, por eso se obtiene la categoria
+			// por cada error generado
 -->
 	<footer class="site-footer contenedor">
 		<nav class="nav">
