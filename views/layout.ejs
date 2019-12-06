@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="/css/normalize.css">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches&display=swap" rel="stylesheet"> 
+	<link rel="stylesheet" href="/css/trix.css">
 	<link rel="stylesheet" href="/css/app.css">
 	<title>Meeti - <%- nombrePagina %> </title>
 </head>
@@ -17,7 +18,7 @@
 		<nav class="nav">
 	
 		       <a href="#">Crear Grupo</a>
-		     	<a href="#">Iniciar Sesión</a>
+		     	<a href="/iniciar-sesion">Iniciar Sesión</a>
 		     	<a href="/crear-cuenta">Registrarse</a>
 		    
 		</nav>
@@ -48,13 +49,13 @@
 -->
 	<footer class="site-footer contenedor">
 		<nav class="nav">
-	
-		       <a href="#">Crear Grupo</a>
-		     	<a href="#">Iniciar Sesión</a>
-		     	<a href="/crear-cuenta">Registrarse</a>
-		    
+		     <a href="#">Crear Grupo</a>
+		     <a href="/iniciar-sesion">Iniciar Sesión</a>
+		     <a href="/crear-cuenta">Registrarse</a>
 		</nav>
 		<p class="copyright">Todos los derechos reservados Meeti <%- year %> &copy;</p>
 	</footer>
+
+	<script src="/js/trix.js"></script>
 </body>
 </html>

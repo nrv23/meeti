@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
+const passport = require('./config/passport');
 const port = process.env.PORT;
 const db = require('./config/db');
 
@@ -17,6 +18,8 @@ const db = require('./config/db');
 // para generar las tablas se deben importar los modelos
 
 require('./models/Usuario');
+require('./models/Categoria');
+require('./models/Grupo');
 db.sync()
 	.then(() => {
 		console.log("Base de datos ONLINE")
@@ -29,9 +32,7 @@ db.sync()
 //habilitar bodyParser y urlencoded para peticiones de tipo post
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 //habiltar express validator para validar los campos del html
 app.use(expressValidator());
@@ -61,6 +62,10 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }))
+
+//inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //agregar connect flash
 app.use(flash());

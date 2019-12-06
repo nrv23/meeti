@@ -66,7 +66,7 @@ const Usuarios = DB.define('usuario',{
 
 Usuarios.prototype.comparePass = function(password){
 	
-	return bcrypt.compareSync(password, this.pasword);
+	return bcrypt.compareSync(password, this.password);
 };
 
 module.exports= Usuarios;
