@@ -1,4 +1,4 @@
-require('dotenv').config({path:'variables.env'});
+require('dotenv').config({path:'variables.env'}); // importar de primero las variables de entorno
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
@@ -20,6 +20,7 @@ const db = require('./config/db');
 require('./models/Usuario');
 require('./models/Categoria');
 require('./models/Grupo');
+
 db.sync()
 	.then(() => {
 		console.log("Base de datos ONLINE")

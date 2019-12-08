@@ -18,8 +18,8 @@ const configMulter = {
 	}),
 	//filtrar formatos de imagen
 	fileFilter: (req, file, next) => {
-		const ext = file.mimetype.split('/')[1];
-		console.log(file.mimetype)
+
+		const ext = file.mimetype.split('/')[1]; //
 		if(ext === 'jpeg' || ext === 'png' ){
 			next(null, true); // el archivo se acepta
 		}else{
@@ -219,4 +219,5 @@ exports.eliminarGrupo = async (req, res)=> {
 	buscar archivos ctrl + p
 	colapsar/mostrar barra lateral ctrl + kb
 	abrir una nueva terminal ctrl + .
+	cerrar archivos ctrl + w
 */

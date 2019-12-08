@@ -45,3 +45,9 @@ module.exports = function(){
 	//retornar las rutas
 	return router;
 }
+
+
+// cuando se visita una url por ejemplo /editar-producto/6, al cargar esa url si hay un formulario 
+// que envia informacion por POST, no se necesita pasarle una url al formulario para enviar los datos
+// porque automaticamente los envia a la misma url actual es decir /editar-producto/6, de manera que en 
+// archivo router creo una url /editar-producto/:id para get y post
