@@ -32,14 +32,21 @@
 
 			markers.clearLayers();
 
-			//utilizar el provider de openstreetmap
+			//utilizar el provider de openstreetmap y el geoCoder
 
-
+			const geocodeService = L.esri.Geocoding.geocodeService(); //instancia del servicio de geocoding 
 			const provider = new OpenStreetMapProvider(); // instanciar OpenStreetMapProvider
 
 			provider.search({query: valor}).then(resultados => { //provider.search es la funcion para buscar lugares
 				// el parametro search es para buscar por coincidencias
-				map.setView(resultados[0].bounds[0], 15);
+
+				//el servicio de geocoding basicamente lo que hace es que al pasarle una ubicacion aplica un reverse
+				// que obtiene datos del lugar al que pertenece la ubicacion
+				geocodeService.reverse().latlng(resultados[0].bounds[0],15).run(function(error, result){
+					//.run va ejecutar la busqueda
+					cargarData(result);
+
+					map.setView(resultados[0].bounds[0], 15);
 
 				//agregar los markers al mapa
 
@@ -58,14 +65,33 @@
 
 					marker.on('moveend',function(e){//moveend es un evento que escucha el movimiento en la ultima 
 						//posicion donde se localiza, es decir donde el marker se detenga
-
 						marker= e.target;
 						const posicion = marker.getLatLng();
 						//habilitar opcion para centrar el mapa cuando se mueva el pin
 						map.panTo(new L.LatLng(posicion.lat,posicion.lng));
-					})
-				
-			})
+						//reverse geocoding cuando el usuario reubica el pin
 
+						geocodeService.reverse().latlng(posicion,15).run(function(error, data){
+							//cambiar la descripcion del popup del marker en cada reubicacion del pin
+
+							marker.bindPopup(data.address.LongLabel);
+
+							cargarData(data);
+					
+						});
+					})
+				})
+			})
 		}
+	}
+
+
+	function cargarData(resultado){
+		
+		document.getElementById("direccion").value = resultado.address.Address || '';
+		document.getElementById("ciudad").value = resultado.address.City || '';
+		document.getElementById("estado").value = resultado.address.Region || '';
+		document.getElementById("pais").value = resultado.address.CountryCode || '';
+		document.getElementById("lat").value = resultado.latlng.lat || '';
+		document.getElementById("lng").value = resultado.latlng.lng || '';
 	}

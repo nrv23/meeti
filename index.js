@@ -20,13 +20,14 @@ const db = require('./config/db');
 require('./models/Usuario');
 require('./models/Categoria');
 require('./models/Grupo');
+require('./models/Meeti');
 
 db.sync()
 	.then(() => {
 		console.log("Base de datos ONLINE")
 	})
 	.catch(err => {
-		console.error("No se pudo crear la base de datos");
+		console.error(err);
 	})
 
 
