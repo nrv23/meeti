@@ -1,9 +1,19 @@
 	import {OpenStreetMapProvider} from 'leaflet-geosearch';
 	
 	const lat = 9.9333296;
-	const long= -84.0833282;
-	const map = L.map('mapa').setView([lat, long], 15);
+	const lng= -84.0833282;
+
+	    /*if (navigator.geolocation) { //check if geolocation is available
+            navigator.geolocation.getCurrentPosition(function(position){
+                 const lat = position.coords.latitude;
+                 const lng = position.coords.longitude;
+    			console.log(lat);
+                                console.log(lng;
+        	});   
+       	}*/
+	
 	//contenedor para markers
+	const map = L.map('mapa').setView([lat, lng], 15);
 	let markers = new L.FeatureGroup().addTo(map);
 	let marker;
 
@@ -85,7 +95,6 @@
 		}
 	}
 
-
 	function cargarData(resultado){
 		
 		document.getElementById("direccion").value = resultado.address.Address || '';
@@ -95,3 +104,6 @@
 		document.getElementById("lat").value = resultado.latlng.lat || '';
 		document.getElementById("lng").value = resultado.latlng.lng || '';
 	}
+
+
+

@@ -40,3 +40,23 @@ exports.nuevoMeet = async (req, res) => {
 	}
 
 }
+
+
+exports.sanitizarMeeti = (req, res, next) => {
+	//sanitizar los campos del form
+
+	req.sanitizeBody('titulo');
+	req.sanitizeBody('invitado');
+	req.sanitizeBody('cupo');
+	req.sanitizeBody('fecha');
+	req.sanitizeBody('hora');
+	req.sanitizeBody('direccion');
+	req.sanitizeBody('ciudad');
+	req.sanitizeBody('estado');
+	req.sanitizeBody('pais');
+	req.sanitizeBody('lat');
+	req.sanitizeBody('lng');
+	req.sanitizeBody('grupoId');
+
+	next();
+}

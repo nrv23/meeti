@@ -40,8 +40,9 @@ module.exports = function(){
 	
 	//Meeti's
 	router.get('/nuevo-meeti', authController.validarSesion, adminController.formNuevoMeet);
-	router.post('/nuevo-meeti', authController.validarSesion, MeetController.nuevoMeet);
-	
+	router.post('/nuevo-meeti', authController.validarSesion, MeetController.sanitizarMeeti,
+		MeetController.nuevoMeet);
+	router.get('/editar-meeti/:id', authController.validarSesion, adminController.formEditarMeeti);
 	//retornar las rutas
 	return router;
 }

@@ -1,14 +1,40 @@
 const Categorias = require('../models/Categoria');
 const Grupos = require('../models/Grupo');
+const Meetis = require('../models/Meeti');
+const moment = require('moment'); // manejo de fechas
+const Op = require('sequelize').Op; // operadores de comparacion en consultas de sequelize, leer documentacion
+// para ver la lista de los operadores de comparacion de sequelie
 
 exports.panelAdmin = async (req, res) => {
 
 	const {id} = req.user;
-	const grupos = await Grupos.findAll({where: {usuarioId: id}});
+	//const grupos = await Grupos.findAll({where: {usuarioId: id}});
+	//const meetis = await Meetis.findAll({where: {usuarioId: id}});
+
+	const array = [];
+	const fechaComparacion = moment(new Date()).format('YYYY-MM-DD');
+
+	array.push(Grupos.findAll({where: {usuarioId: id}}));
+
+	array.push(Meetis.findAll(
+		{where: {usuarioId: id, 
+		fecha :{[Op.gte]: fechaComparacion}
+	}})); // filtrar meetis que sea mayores o iguales a la fecha actual
+
+	array.push(Meetis.findAll(
+		{where: {usuarioId: id, 
+		fecha :{[Op.lt]: fechaComparacion}
+	}})); //estos meetis son los que ya estan pasados y se van a listar por si se quiere volver a generar un meeti 
+	//igual
 	
+	const [grupos,meetis,anteriores] = await Promise.all(array);
+
 	res.render('admin',{
 		nombrePagina: 'Panel de Administración',
-		grupos
+		grupos,
+		meetis,
+		moment,
+		anteriores
 	})
 }
 
@@ -79,3 +105,26 @@ exports.formNuevoMeet = async (req, res ) => {
 		grupos
 	})
 }
+
+
+exports.formEditarMeeti= async (req, res) => {
+
+	const {id} = req.params;
+	const consultas = [];
+	
+	consultas.push(Grupos.findAll({where:{ usuarioId: id}}));
+	consultas.push(Meetis.findByPk(id)); // TRAER EL MEETI POR EL ID DEL MEETI
+
+	const [grupos, meeti] = await Promise.all(consultas);
+	
+	if(!grupos || !meeti){
+		req.flash('error','Operación no válida');
+		return res.redirect('/admin');
+	}
+
+	res.render('editar-meeti',{
+		nombrePagina: 'Editar Meet: '+meeti.titulo,
+		grupos,
+		meeti
+	})
+} 
