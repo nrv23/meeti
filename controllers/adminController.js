@@ -94,7 +94,6 @@ exports.formEliminarGrupo = async (req, res ) => {
 	})
 }
 
-
 exports.formNuevoMeet = async (req, res ) => {
 
 	const {id} = req.user;
@@ -106,12 +105,11 @@ exports.formNuevoMeet = async (req, res ) => {
 	})
 }
 
-
 exports.formEditarMeeti= async (req, res) => {
 
 	const {id} = req.params;
 	const consultas = [];
-	
+
 	consultas.push(Grupos.findAll({where:{ usuarioId: id}}));
 	consultas.push(Meetis.findByPk(id)); // TRAER EL MEETI POR EL ID DEL MEETI
 
@@ -128,3 +126,20 @@ exports.formEditarMeeti= async (req, res) => {
 		meeti
 	})
 } 
+
+exports.formEliminarMeeti = async (req, res) => {
+	
+	const {id} = req.params;
+	const usuarioId = req.user.id;
+
+	const meeti = await Meetis.findOne({where: {id,usuarioId}});
+
+	if(!meeti){
+		req.flash('error','Operación no válida');
+		return res.redirect('/admin');
+	}
+
+	res.render('eliminar-meeti',{
+		nombrePagina: 'ELiminar Meeti: '+meeti.titulo
+	})
+}

@@ -42,7 +42,13 @@ module.exports = function(){
 	router.get('/nuevo-meeti', authController.validarSesion, adminController.formNuevoMeet);
 	router.post('/nuevo-meeti', authController.validarSesion, MeetController.sanitizarMeeti,
 		MeetController.nuevoMeet);
+
 	router.get('/editar-meeti/:id', authController.validarSesion, adminController.formEditarMeeti);
+	router.post('/editar-meeti/:id', authController.validarSesion,
+									MeetController.sanitizarMeeti,
+									MeetController.actualizarMeeti);
+	router.get('/eliminar-meeti/:id', authController.validarSesion, adminController.formEliminarMeeti);
+	router.post('/eliminar-meeti/:id', authController.validarSesion, MeetController.eliminarMeeti);
 	//retornar las rutas
 	return router;
 }

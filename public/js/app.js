@@ -1,7 +1,9 @@
 	import {OpenStreetMapProvider} from 'leaflet-geosearch';
 	
-	const lat = 9.9333296;
-	const lng= -84.0833282;
+	const geocodeService = L.esri.Geocoding.geocodeService(); //instancia del servicio de geocoding 
+	const lat = document.getElementById("lat").value || 9.9333296;
+	const lng = document.getElementById("lng").value || -84.0833282;
+	const direccion = document.getElementById("direccion").value || '';
 
 	    /*if (navigator.geolocation) { //check if geolocation is available
             navigator.geolocation.getCurrentPosition(function(position){
@@ -16,6 +18,38 @@
 	const map = L.map('mapa').setView([lat, lng], 15);
 	let markers = new L.FeatureGroup().addTo(map);
 	let marker;
+
+	//colocar el pin en edicion
+	if(lat && lng){// si estos valores existen
+		marker = new L.marker([lat,lng], {
+					//habilitar la opcion para mover el pin
+					draggable: true,
+					autoPan: true // habilitar la opcion de mover el mapa cuando se mueva el marker
+				})
+				.addTo(map)
+				.bindPopup(direccion)
+				.openPopup();
+
+				markers.addLayer(marker);
+
+				marker.on('moveend',function(e){//moveend es un evento que escucha el movimiento en la ultima 
+						//posicion donde se localiza, es decir donde el marker se detenga
+						marker= e.target;
+						const posicion = marker.getLatLng();
+						//habilitar opcion para centrar el mapa cuando se mueva el pin
+						map.panTo(new L.LatLng(posicion.lat,posicion.lng));
+						//reverse geocoding cuando el usuario reubica el pin
+
+						geocodeService.reverse().latlng(posicion,15).run(function(error, data){
+							//cambiar la descripcion del popup del marker en cada reubicacion del pin
+
+							marker.bindPopup(data.address.LongLabel);
+
+							cargarData(data);
+					
+						});
+					});
+	}
 
 	document.addEventListener("DOMContentLoaded", () => {
 		// el tercer parametro es el zoom del mapa
@@ -44,7 +78,6 @@
 
 			//utilizar el provider de openstreetmap y el geoCoder
 
-			const geocodeService = L.esri.Geocoding.geocodeService(); //instancia del servicio de geocoding 
 			const provider = new OpenStreetMapProvider(); // instanciar OpenStreetMapProvider
 
 			provider.search({query: valor}).then(resultados => { //provider.search es la funcion para buscar lugares
