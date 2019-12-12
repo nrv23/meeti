@@ -18,6 +18,9 @@ const Usuarios = DB.define('usuario',{
 			}
 		}
 	},
+	descripcion:{
+		type: Sequelize.STRING(250)
+	},
 	email:{
 		type: Sequelize.STRING(40),
 		allowNull: false,
@@ -57,7 +60,7 @@ const Usuarios = DB.define('usuario',{
 		beforeCreate(usuario){
 	
 
-			usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10),null);
+			usuario.password = usuario.hashPassword(usuario.password);
 		}
 	}
 });
@@ -67,6 +70,11 @@ const Usuarios = DB.define('usuario',{
 Usuarios.prototype.comparePass = function(password){
 	
 	return bcrypt.compareSync(password, this.password);
+};
+
+Usuarios.prototype.hashPassword = function(password){
+	
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(10),null);
 };
 
 module.exports= Usuarios;

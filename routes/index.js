@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
 const homeController = require('../controllers/homeController');
 const usuariosController = require('../controllers/usuariosController');
 const authController = require('../controllers/authController');
 const adminController = require('../controllers/adminController');
 const grupoController = require('../controllers/grupoController');
 const MeetController = require('../controllers/MeetController');
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(){
+module.exports = () => {
 	
 	router.get('/',homeController.inicio);
 	router.get('/crear-cuenta',usuariosController.formCrearCuenta);
@@ -49,6 +49,14 @@ module.exports = function(){
 									MeetController.actualizarMeeti);
 	router.get('/eliminar-meeti/:id', authController.validarSesion, adminController.formEliminarMeeti);
 	router.post('/eliminar-meeti/:id', authController.validarSesion, MeetController.eliminarMeeti);
+	
+	//Perfil
+	router.get('/editar-perfil', authController.validarSesion,usuariosController.formEditarPerfil);
+	router.post('/editar-perfil', authController.validarSesion,usuariosController.actualizarPerfil);
+
+	//contraseña
+	router.get('/editar-password',authController.validarSesion, adminController.formEditarPassword);
+	router.post('/editar-password',authController.validarSesion, usuariosController.actualizarPassword);
 	//retornar las rutas
 	return router;
 }

@@ -12,7 +12,7 @@ const Meeti = DB.define('meetis',{
 		autoIncrement: true
 	},
 	titulo:{
-		type: Sequelize.STRING(50),
+		type: Sequelize.STRING(100),
 		allowNull: false,
 		validate:{
 			notEmpty:{
@@ -21,7 +21,7 @@ const Meeti = DB.define('meetis',{
 		}
 	},
 	slug:{
-		type: Sequelize.STRING(50)
+		type: Sequelize.STRING(100)
 	},
 	invitado: Sequelize.STRING(50),
 	cupo: {

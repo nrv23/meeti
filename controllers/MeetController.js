@@ -32,7 +32,7 @@ exports.nuevoMeet = async (req, res) => {
 		res.redirect('/admin')
 	
 	} catch(e) {
-
+		console.log("error ",e);
 		const erroresSequelize = e.errors.map(err => err.message);
 		req.flash('error',erroresSequelize);
 		res.redirect('/nuevo-meeti')
@@ -102,7 +102,7 @@ exports.eliminarMeeti = async (req, res) => {
 		res.redirect('/admin');
 
 	} catch(e) {
-		
+		//
 		console.log(e);
 		const erroresSequelize = e.errors.map(err => err.message);
 		req.flash('error',erroresSequelize);

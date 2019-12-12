@@ -26,7 +26,7 @@ exports.panelAdmin = async (req, res) => {
 		fecha :{[Op.lt]: fechaComparacion}
 	}})); //estos meetis son los que ya estan pasados y se van a listar por si se quiere volver a generar un meeti 
 	//igual
-	
+
 	const [grupos,meetis,anteriores] = await Promise.all(array);
 
 	res.render('admin',{
@@ -141,5 +141,12 @@ exports.formEliminarMeeti = async (req, res) => {
 
 	res.render('eliminar-meeti',{
 		nombrePagina: 'ELiminar Meeti: '+meeti.titulo
+	})
+}
+
+exports.formEditarPassword = (req, res)  => {
+
+	res.render('editar-password',{
+		nombrePagina: 'editar password'
 	})
 }
