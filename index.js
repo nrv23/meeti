@@ -77,6 +77,8 @@ app.use(flash());
 app.use((req, res, next) => {
 	res.locals.year = new Date().getFullYear();
 	res.locals.mensajes = req.flash();
+	res.locals.usuario = {...req.user || null }; // de esta manera sé si hay alguien logueado
+	// para poder utilizar la instancia de usuario logueado de maner global
 	next();
 })
 

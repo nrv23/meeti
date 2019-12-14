@@ -13,7 +13,7 @@
                                 console.log(lng;
         	});   
        	}*/
-	
+	//	
 	//contenedor para markers
 	const map = L.map('mapa').setView([lat, lng], 15);
 	let markers = new L.FeatureGroup().addTo(map);

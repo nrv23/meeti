@@ -8,7 +8,10 @@ const Categorias = DB.define('categorias',{
 		primaryKey: true,
 		autoIncrement: true
 	},
-	nombre: Sequelize.STRING
+	nombre: Sequelize.STRING,
+	slug: Sequelize.STRING
+},{
+	timestamps: false
 })
 
 

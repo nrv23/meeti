@@ -9,6 +9,9 @@ const router = express.Router();
 
 module.exports = () => {
 	
+
+	//AREA PUBLICA
+
 	router.get('/',homeController.inicio);
 	router.get('/crear-cuenta',usuariosController.formCrearCuenta);
 	router.post('/crear-cuenta',usuariosController.validarPassword,usuariosController.crearCuenta);
@@ -19,6 +22,11 @@ module.exports = () => {
 
 	//confirmar cuenta 
 	router.get('/confirmar-cuenta/:email',usuariosController.confrimarCuenta);
+
+
+
+
+	//AREA PRIVADA
 
 	//Administracion
 	router.get('/admin',authController.validarSesion,adminController.panelAdmin);
@@ -57,6 +65,16 @@ module.exports = () => {
 	//contraseña
 	router.get('/editar-password',authController.validarSesion, adminController.formEditarPassword);
 	router.post('/editar-password',authController.validarSesion, usuariosController.actualizarPassword);
+	
+	//imagen del grupo
+	router.get('/imagen-perfil',authController.validarSesion,adminController.formEditarImagenPerfil);
+	router.post('/imagen-perfil',authController.validarSesion,
+								usuariosController.subirImagen
+								,usuariosController.editarImagenPerfil);
+	//cerrar sesion
+	router.get('/logout', authController.validarSesion,adminController.cerrarSesion);
+
+
 	//retornar las rutas
 	return router;
 }

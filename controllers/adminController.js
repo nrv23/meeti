@@ -1,6 +1,7 @@
 const Categorias = require('../models/Categoria');
 const Grupos = require('../models/Grupo');
 const Meetis = require('../models/Meeti');
+const Usuarios = require('../models/Usuario');
 const moment = require('moment'); // manejo de fechas
 const Op = require('sequelize').Op; // operadores de comparacion en consultas de sequelize, leer documentacion
 // para ver la lista de los operadores de comparacion de sequelie
@@ -149,4 +150,23 @@ exports.formEditarPassword = (req, res)  => {
 	res.render('editar-password',{
 		nombrePagina: 'editar password'
 	})
+}
+
+exports.formEditarImagenPerfil = async (req,res) => {
+	
+	const { id} = req.user;
+	const usuario = await Usuarios.findByPk(id);
+
+	res.render('editar-imagen-perfil',{
+		nombrePagina: 'editar imagen',
+		usuario
+	})
+}
+
+exports.cerrarSesion = (req, res,next) => {
+	
+	req.logout();
+	req.flash('exito', 'Has cerrado sesión');
+	res.redirect('/iniciar-sesion');
+	next();
 }

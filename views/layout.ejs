@@ -21,9 +21,11 @@
 		</a>
 		<nav class="nav">
 	
-		       <a href="#">Crear Grupo</a>
-		     	<a href="/iniciar-sesion">Iniciar Sesión</a>
-		     	<a href="/crear-cuenta">Registrarse</a>
+		   <%if(locals.usuario.id){%>
+		   	<%-include partials/nav-autenticado.ejs%>
+		   <%}else{%>
+		 	<%-include partials/nav-no-autenticado.ejs%>
+		   <%}%>
 		    
 		</nav>
 	</header>
@@ -53,9 +55,15 @@
 -->
 	<footer class="site-footer contenedor">
 		<nav class="nav">
-		     <a href="#">Crear Grupo</a>
-		     <a href="/iniciar-sesion">Iniciar Sesión</a>
-		     <a href="/crear-cuenta">Registrarse</a>
+	<!-- la funcion include importa codigo de html y para pintarlo en el layout no se 
+	 usa el igual(=) en el codigo de ejs sino el guion(-) -->
+
+		   <%if(locals.usuario.id){%>
+		   	<%- include partials/nav-autenticado.ejs%>
+		   <%}else{%>
+		 	<%- include partials/nav-no-autenticado.ejs%>
+		   <%}%>
+		    
 		</nav>
 		<p class="copyright">Todos los derechos reservados Meeti <%- year %> &copy;</p>
 	</footer>
