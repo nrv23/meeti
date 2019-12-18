@@ -12,7 +12,7 @@ const Meeti = DB.define('meetis',{
 		autoIncrement: true
 	},
 	titulo:{
-		type: Sequelize.STRING(100),
+		type: Sequelize.STRING,
 		allowNull: false,
 		validate:{
 			notEmpty:{
@@ -21,9 +21,9 @@ const Meeti = DB.define('meetis',{
 		}
 	},
 	slug:{
-		type: Sequelize.STRING(100)
+		type: Sequelize.STRING
 	},
-	invitado: Sequelize.STRING(50),
+	invitado: Sequelize.STRING,
 	cupo: {
 		type: Sequelize.INTEGER,
 		defaultValue: 0 // por si no se pone un valor para el cupo
@@ -58,7 +58,7 @@ const Meeti = DB.define('meetis',{
 		}
 	},
 	direccion:  {
-		type: Sequelize.STRING(100),
+		type: Sequelize.STRING,
 		allowNull: false,
 		validate :{
 			notEmpty:{
@@ -67,7 +67,7 @@ const Meeti = DB.define('meetis',{
 		}
 	},
 	ciudad:  {
-		type: Sequelize.STRING(50),
+		type: Sequelize.STRING,
 		allowNull: false,
 		validate :{
 			notEmpty:{
@@ -76,7 +76,7 @@ const Meeti = DB.define('meetis',{
 		}
 	},
 	estado:  {
-		type: Sequelize.STRING(50),
+		type: Sequelize.STRING,
 		allowNull: false,
 		validate :{
 			notEmpty:{

@@ -20,7 +20,11 @@ exports.panelAdmin = async (req, res) => {
 	array.push(Meetis.findAll(
 		{where: {usuarioId: id, 
 		fecha :{[Op.gte]: fechaComparacion}
-	}})); // filtrar meetis que sea mayores o iguales a la fecha actual
+	},
+		order:[
+				['fecha','DESC']// ordenar por fechas descendente 
+			]
+	})); // filtrar meetis que sea mayores o iguales a la fecha actual
 
 	array.push(Meetis.findAll(
 		{where: {usuarioId: id, 
@@ -108,14 +112,14 @@ exports.formNuevoMeet = async (req, res ) => {
 
 exports.formEditarMeeti= async (req, res) => {
 
-	const {id} = req.params;
+	const {id} = req.user;
+	const idMeeti = req.params.id;
 	const consultas = [];
 
 	consultas.push(Grupos.findAll({where:{ usuarioId: id}}));
-	consultas.push(Meetis.findByPk(id)); // TRAER EL MEETI POR EL ID DEL MEETI
-
+	consultas.push(Meetis.findByPk(idMeeti)); // TRAER EL MEETI POR EL ID DEL MEETI
 	const [grupos, meeti] = await Promise.all(consultas);
-	
+
 	if(!grupos || !meeti){
 		req.flash('error','Operación no válida');
 		return res.redirect('/admin');

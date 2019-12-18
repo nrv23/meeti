@@ -4,12 +4,13 @@ const authController = require('../controllers/authController');
 const adminController = require('../controllers/adminController');
 const grupoController = require('../controllers/grupoController');
 const MeetController = require('../controllers/MeetController');
+const CategoriasController = require('../controllers/CategoriasController');
+const MeetControllerFrontend = require('../controllers/Frontend/MeetiController');
 const express = require('express');
 const router = express.Router();
 
 module.exports = () => {
 	
-
 	//AREA PUBLICA
 
 	router.get('/',homeController.inicio);
@@ -23,8 +24,8 @@ module.exports = () => {
 	//confirmar cuenta 
 	router.get('/confirmar-cuenta/:email',usuariosController.confrimarCuenta);
 
-
-
+	//buscar por categoria
+	router.get('/categoria/:url',CategoriasController.FiltrarMeetis);
 
 	//AREA PRIVADA
 
@@ -43,6 +44,7 @@ module.exports = () => {
 	router.post('/imagen-grupo/:grupoId', authController.validarSesion, 
 							   			  grupoController.subirImagen,
 										  grupoController.actualizarImagenGrupo);
+
 	router.get('/eliminar-grupo/:grupoId',authController.validarSesion,adminController.formEliminarGrupo);
 	router.post('/eliminar-grupo/:grupoId',authController.validarSesion,grupoController.eliminarGrupo);
 	
@@ -55,6 +57,7 @@ module.exports = () => {
 	router.post('/editar-meeti/:id', authController.validarSesion,
 									MeetController.sanitizarMeeti,
 									MeetController.actualizarMeeti);
+	
 	router.get('/eliminar-meeti/:id', authController.validarSesion, adminController.formEliminarMeeti);
 	router.post('/eliminar-meeti/:id', authController.validarSesion, MeetController.eliminarMeeti);
 	
@@ -74,6 +77,8 @@ module.exports = () => {
 	//cerrar sesion
 	router.get('/logout', authController.validarSesion,adminController.cerrarSesion);
 
+	//mostrar meetis del frontend filtrados 
+	router.get('/meeti/:slug', MeetControllerFrontend.mostrarMeeti);
 
 	//retornar las rutas
 	return router;
