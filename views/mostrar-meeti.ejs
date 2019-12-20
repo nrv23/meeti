@@ -21,8 +21,21 @@
 		</div><!-- Resumen del evento-->
 		<div class="pregunta-asistencia">
 			<% if(usuario.id) {%> <!--Debe haber un usuario logueado -->
-				<p>¿Asistirás?</p>
-				<a href="#" class="btn btn-azul">Sí</a>
+			<% const existe = meeti.interesados.includes(usuario.id); %>
+				<form id="confirmar-asistencia" action ="/confirmar-asistencia/<%= meeti.slug%>">
+					<p>¿Asistirás?</p>
+					<%if(existe) {%>
+						<input type="hidden" id="accion" value="Cancelar">
+						<input type="submit" class="btn btn-rojo" id="btnAsistencia" value="Cancelar">
+					<%}else {%>
+						<input type="hidden" id="accion" value="confirmar">
+						<input type="submit" class="btn btn-azul" id="btnAsistencia" value="Sí">
+					<%}%>
+
+					<div id="mensaje"></div>
+				</form>
+			<%} else {%>
+				<p>Inicia sesión para confirmar tu asistencia</p>
 			<%}%>
 		</div>
 	</div>
@@ -33,14 +46,14 @@
 		<div class="informacion-evento">
 			<div class="descripcion">
 				<%if(meeti.grupo.imagen) {%>
-					<img src="/uploads/grupos/<%= meeti.grupo.imagen%>" alt="">
+					<img src="/uploads/grupos/<%= meeti.grupo.imagen%>">
 				<%}%>
 				<p><%- meeti.grupo.descripcion%></p>
 			</div><!-- CIerre de la descripcion-->
 			<div class="asistentes">
 				<div class="titulo">
 					<h3><%= meeti.interesados.length%> Asistentes</h3>
-					<a href="/meeti/<%= meeti.slug%>">Ver Todos</a>
+					<a href="/meet/<%= meeti.slug%>">Ver Todos</a>
 				</div>
 			</div>
 			<div class="comentarios">

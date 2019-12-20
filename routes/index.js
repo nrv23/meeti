@@ -6,6 +6,8 @@ const grupoController = require('../controllers/grupoController');
 const MeetController = require('../controllers/MeetController');
 const CategoriasController = require('../controllers/CategoriasController');
 const MeetControllerFrontend = require('../controllers/Frontend/MeetiController');
+const usuariosControllerFrontend = require('../controllers/Frontend/UsuariosController');
+const GruposControllerFrontend = require('../controllers/Frontend/GruposController');
 const express = require('express');
 const router = express.Router();
 
@@ -44,6 +46,7 @@ module.exports = () => {
 	router.post('/imagen-grupo/:grupoId', authController.validarSesion, 
 							   			  grupoController.subirImagen,
 										  grupoController.actualizarImagenGrupo);
+	router.get('/grupos/:id', GruposControllerFrontend.mostrarinformacionGrupo);
 
 	router.get('/eliminar-grupo/:grupoId',authController.validarSesion,adminController.formEliminarGrupo);
 	router.post('/eliminar-grupo/:grupoId',authController.validarSesion,grupoController.eliminarGrupo);
@@ -80,6 +83,15 @@ module.exports = () => {
 	//mostrar meetis del frontend filtrados 
 	router.get('/meeti/:slug', MeetControllerFrontend.mostrarMeeti);
 
+	//confirmar asistencia
+
+	router.post('/confirmar-asistencia/:slug', MeetControllerFrontend.confirmarAsistencia);
+
+	//muestra asistentes al meeti
+	router.get('/meet/:slug', MeetControllerFrontend.mostrarAsistentes);
+	
+	//ver informacion del usuario administrador
+	router.get('/usuarios/:id', usuariosControllerFrontend.mostrarInformacionUsuario);
 	//retornar las rutas
 	return router;
 }
