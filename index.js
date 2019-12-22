@@ -21,8 +21,9 @@ require('./models/Usuario');
 require('./models/Categoria');
 require('./models/Grupo');
 require('./models/Meeti');
+require('./models/Comentario');
 
-db.sync()
+db.sync() // crear la base d edatos
 	.then(() => {
 		console.log("Base de datos ONLINE")
 	})

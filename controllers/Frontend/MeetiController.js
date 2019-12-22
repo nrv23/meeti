@@ -1,12 +1,15 @@
 const Meetis = require('../../models/Meeti');
 const Grupos = require('../../models/Grupo');
 const Usuarios = require('../../models/Usuario');
+const Categorias = require('../../models/Categoria');
+const Comentarios = require('../../models/Comentario');
 const moment = require('moment');
 const Sequelize = require('sequelize');
 
 exports.mostrarMeeti = async (req, res) => {
-	const {slug} = req.params;
-	const meeti = await Meetis.findOne({where: {slug}
+
+	const {id} = req.params;
+	const meeti = await Meetis.findOne({where: {id}
 		,
 		include: [
 			{
@@ -23,10 +26,26 @@ exports.mostrarMeeti = async (req, res) => {
 		return res.redirect('/');
 	}
 
+
+	const comentarios = await Comentarios.findAll({
+		where: {
+			meetiId: meeti.id
+		},
+		include :[
+			{
+				model: Usuarios,
+				attributes: ['id', 'nombre','imagen']
+			}
+		]
+	})
+
+	console.log(comentarios)
+
 	res.render('mostrar-meeti',{
 		nombrePagina: meeti.titulo,
 		meeti,
-		moment
+		moment,
+		comentarios
 	})
 
 }
@@ -93,4 +112,47 @@ exports.mostrarAsistentes= async (req, res) => {
 		asistentes
 	})
 
+}
+
+
+
+exports.FiltrarMeetis = async (req, res) => {
+	
+	const {slug} = req.params;
+
+	const categoria = await Categorias.findOne({
+		attributes:['id','nombre'],
+		where: {slug}
+	});
+
+	if(!categoria){
+		req.flash('error','Operación inválida');
+		return res.redirect('/');
+	}
+
+	const meetis = await Meetis.findAll({
+
+			order: [
+
+				['fecha','ASC'],
+				['hora','ASC']
+			],
+			include:[
+				{
+					model: Grupos,
+					attributes: ['imagen','nombre'],
+					where: {categoriaId: categoria.id}
+				},
+				{
+					model: Usuarios,
+					attributes: ['nombre','imagen']
+				}
+			]
+	})
+
+	res.render('categoria',{
+		nombrePagina: 'Categoría '+categoria.nombre,
+		meetis,
+		moment
+	})
 }

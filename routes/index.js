@@ -4,10 +4,10 @@ const authController = require('../controllers/authController');
 const adminController = require('../controllers/adminController');
 const grupoController = require('../controllers/grupoController');
 const MeetController = require('../controllers/MeetController');
-const CategoriasController = require('../controllers/CategoriasController');
 const MeetControllerFrontend = require('../controllers/Frontend/MeetiController');
 const usuariosControllerFrontend = require('../controllers/Frontend/UsuariosController');
 const GruposControllerFrontend = require('../controllers/Frontend/GruposController');
+const ComentariosControllerFrontend = require('../controllers/Frontend/ComentariosController');
 const express = require('express');
 const router = express.Router();
 
@@ -27,7 +27,11 @@ module.exports = () => {
 	router.get('/confirmar-cuenta/:email',usuariosController.confrimarCuenta);
 
 	//buscar por categoria
-	router.get('/categoria/:url',CategoriasController.FiltrarMeetis);
+	router.get('/categoria/:slug',MeetControllerFrontend.FiltrarMeetis);
+
+	//agregar comentarios 
+	router.post('/meeti/:id', authController.validarSesion,
+								ComentariosControllerFrontend.agregarComentario);
 
 	//AREA PRIVADA
 
@@ -81,7 +85,7 @@ module.exports = () => {
 	router.get('/logout', authController.validarSesion,adminController.cerrarSesion);
 
 	//mostrar meetis del frontend filtrados 
-	router.get('/meeti/:slug', MeetControllerFrontend.mostrarMeeti);
+	router.get('/meeti/:id', MeetControllerFrontend.mostrarMeeti);
 
 	//confirmar asistencia
 

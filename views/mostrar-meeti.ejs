@@ -58,25 +58,44 @@
 			</div>
 			<div class="comentarios">
 				<h2>Comentarios</h2>
-				<div class="comentario">
-					<div class="imagen"></div>
-					<div class="texto">
-						<p>Hola</p>
-						<p>Escrito por: <span>Nataniel </span></p>
-						<input type="button" value="Eliminar"  class="btn btn-azul">
-					</div>
-				</div>
+				<%if(comentarios.length >0 ){ %>
+					<%comentarios.forEach(comentario => {%>
+						<div class="comentario">
+							<%if(comentario.usuario.imagen){%>
+								<div class="imagen">
+									<img src="/uploads/usuarios/<%= comentario.usuario.imagen%>" alt="">
+								</div>
+							<%} else {%>
+								<div class="imagen"></div>
+							<%}%>
+							<div class="texto">
+								<!-- <p style="float: right;">23 de diciembre 2019</p> -->
+								<p><%=comentario.mensaje%></p>
+								<p>Escrito por: <a href="/usuarios/<%= comentario.usuario.id%>" >
+									<%= comentario.usuario.nombre %>
+								</a></p>
+								<input type="button" value="Eliminar"  class="btn btn-azul">
+							</div>
+						</div>
+					<%})%>
+				<%} else {%>
+					<p>No hay comentarios aún</p>
+				<%}%>
 				<!-- Formulario para agregar comentarios-->
-				<form action="" class="default-form comentarios">
-					<legend>Agrega un comentario</legend>
-					<div class="campo">
-						<label>Comentario</label>
-						<textarea name="comentario"></textarea>
-					</div>
-					<div class="campo enviar">
-						<input type="submit" value="Enviar" class="btn btn-rosa">
-					</div>
-				</form>
+				<% if(usuario.id) {%>
+					<form action="/meeti/<%= meeti.id%>" method="POST" class="default-form comentarios">
+						<legend>Agrega un comentario</legend>
+						<div class="campo">
+							<label>Comentario</label>
+							<textarea name="comentario"></textarea>
+						</div>
+						<div class="campo enviar">
+							<input type="submit" value="Enviar" class="btn btn-rosa">
+						</div>
+					</form>
+				<%} else {%>
+					<p>Inicia sesión para agregar un comentario</p>
+				<%}%>
 			</div><!-- COmentarios-->
 		</div><!-- Informacion de evento-->
 

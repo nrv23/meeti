@@ -10,7 +10,7 @@ exports.inicio= async (req, res) => {
 	const consultas = [];
 	consultas.push(Categorias.findAll({}));
 	consultas.push(Meetis.findAll({
-		attributes: ['slug','titulo', 'fecha','hora'], //este arreglo son los campos que necesito traer en la consulta
+		attributes: ['slug','titulo', 'fecha','hora','id'], //este arreglo son los campos que necesito traer en la consulta
 		where: {// filtrar por fechas, el operador gte filtra por fecha igual o mayor a la fecha 
 			// que hay en los registros de la bd, moment convierte la fecha actual en formato año/mes/dia
 			fecha : {[Op.gte]: moment(new Date()).format("YYYY-MM-DD")}
