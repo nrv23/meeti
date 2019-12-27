@@ -40,4 +40,3 @@ exports.inicio= async (req, res) => {
 	})
 }
 //hacer declaraciones de hacienda mañana
-

@@ -5,6 +5,7 @@ const Categorias = require('../../models/Categoria');
 const Comentarios = require('../../models/Comentario');
 const moment = require('moment');
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 exports.mostrarMeeti = async (req, res) => {
 
@@ -26,6 +27,40 @@ exports.mostrarMeeti = async (req, res) => {
 		return res.redirect('/');
 	}
 
+	//Consultar por meetis cercanos 
+	//Sequelize.literal es una funcion que crea un objeto con informacion no escapada
+
+	const ubicacion = Sequelize.literal(`ST_GeomFromText('POINT(
+		${meeti.ubicacion.coordinates[0]} ${meeti.ubicacion.coordinates[1]}
+		)')`); // genera una ubicacion entre los puntos de latitud y longitud, es como si pintara
+	// una ubicacion en un mapa
+
+	//ST_DISTANCE_Sphere = Retorna la distancia en una linea de metros
+	const distancia = Sequelize.fn('ST_DISTANCE_Sphere', Sequelize.col('ubicacion'), ubicacion)
+	//obtengo la distancia con al funcion ST_DISTANCE_Sphere le paso las columnas donde se va comparar
+	// los datos de ubicacion y le paso la ubicacion.
+	//Esta funcion genera distancias entre meetis relacionados y lo almacena en metros
+
+	//obtener los meetis mas cercanos
+
+	const cercanos = await Meetis.findAll({
+		order: distancia, //ordena los meetis por la distancia
+		where: Sequelize.where(distancia,{
+			[Op.lte]: 8000 // donde los meetis esten a un maximo de 2km,
+			//las distancias para filtrar los meetis se deben pasar como metros 
+		}),
+		limit: 3, //limitar a 3 resultados
+		offset: 1, // al tener el primer meeti obtener desde el segundo meeti teniendo en cuenta al primero
+		include: [
+			{
+				model: Grupos
+			},{
+
+				model: Usuarios,
+				attributes: ['id', 'nombre','imagen']
+			}
+		]
+	})
 
 	const comentarios = await Comentarios.findAll({
 		where: {
@@ -39,13 +74,12 @@ exports.mostrarMeeti = async (req, res) => {
 		]
 	})
 
-	console.log(comentarios)
-
 	res.render('mostrar-meeti',{
 		nombrePagina: meeti.titulo,
 		meeti,
 		moment,
-		comentarios
+		comentarios,
+		cercanos
 	})
 
 }

@@ -17,7 +17,7 @@
 				    <li>
 				    	<div class="informacion-admin">
 				    		<p class="fecha"><%= moment(fecha).format('LLLL');%> Horas</p>
-				    		<a href="/meeti/<%= meet.slug%>" target="_blank">
+				    		<a href="/meeti/<%= meet.id%>" target="_blank">
 				    			<h3><%= meet.titulo%></h3>
 				    		</a>
 				    		<small><%= meet.interesados.length%> Interesados</small>
@@ -68,7 +68,9 @@
 				    <li>
 				    	<div class="informacion-admin">
 				    		<p class="fecha"><%= moment(fecha).format('LLLL');%> Horas</p>
-				    		<h3><%= meet.titulo%></h3>
+				    		<a href="/meeti/<%= meet.id%>" target="_blank">
+				    			<h3><%= meet.titulo%></h3>
+				    		</a>
 				    		<small><%= meet.interesados.length%> Interesados</small>
 				    	</div>
 				    	<div class="acciones contenedor-botones">

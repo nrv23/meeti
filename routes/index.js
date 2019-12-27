@@ -8,6 +8,7 @@ const MeetControllerFrontend = require('../controllers/Frontend/MeetiController'
 const usuariosControllerFrontend = require('../controllers/Frontend/UsuariosController');
 const GruposControllerFrontend = require('../controllers/Frontend/GruposController');
 const ComentariosControllerFrontend = require('../controllers/Frontend/ComentariosController');
+const busquedasController = require('../controllers/Frontend/busquedasController');
 const express = require('express');
 const router = express.Router();
 
@@ -33,6 +34,10 @@ module.exports = () => {
 	router.post('/meeti/:id', authController.validarSesion,
 								ComentariosControllerFrontend.agregarComentario);
 
+	router.post('/eliminar-comentario',authController.validarSesion,
+								ComentariosControllerFrontend.eliminarComentario);
+
+	router.get('/busqueda', busquedasController.buscarMeetis);
 	//AREA PRIVADA
 
 	//Administracion

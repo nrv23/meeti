@@ -1,5 +1,6 @@
 	import {OpenStreetMapProvider} from 'leaflet-geosearch';
 	import asistencia from './asistencia';	
+	import eliminarComentario from './eliminarComentario';	
 
 	const geocodeService = L.esri.Geocoding.geocodeService(); //instancia del servicio de geocoding 
 	const lat = document.getElementById("lat").value || 9.9333296;
