@@ -90,14 +90,14 @@ module.exports = () => {
 	router.get('/logout', authController.validarSesion,adminController.cerrarSesion);
 
 	//mostrar meetis del frontend filtrados 
-	router.get('/meeti/:id', MeetControllerFrontend.mostrarMeeti);
+	router.get('/meeti/:slug', MeetControllerFrontend.mostrarMeeti);
 
 	//confirmar asistencia
 
 	router.post('/confirmar-asistencia/:slug', MeetControllerFrontend.confirmarAsistencia);
 
 	//muestra asistentes al meeti
-	router.get('/meet/:slug', MeetControllerFrontend.mostrarAsistentes);
+	router.get('/meet/asistentes/:id', MeetControllerFrontend.mostrarAsistentes);
 	
 	//ver informacion del usuario administrador
 	router.get('/usuarios/:id', usuariosControllerFrontend.mostrarInformacionUsuario);

@@ -9,8 +9,8 @@ const Op = Sequelize.Op;
 
 exports.mostrarMeeti = async (req, res) => {
 
-	const {id} = req.params;
-	const meeti = await Meetis.findOne({where: {id}
+	const {slug} = req.params;
+	const meeti = await Meetis.findOne({where: {slug}
 		,
 		include: [
 			{
@@ -118,9 +118,9 @@ exports.confirmarAsistencia = async (req, res) => {
 
 exports.mostrarAsistentes= async (req, res) => {
 	
-	const {slug} = req.params;
+	const {id} = req.params;
 	const meeti = await Meetis.findOne({
-		where:{slug},
+		where:{id},
 		attributes:['interesados'],
 	});
 
